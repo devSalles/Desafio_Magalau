@@ -15,10 +15,10 @@ public class MessageRestError {
     private String message;
     private LocalDateTime timeStamp;
 
-    private MessageRestError(HttpStatus status, String message)
+    public MessageRestError(HttpStatus status, String message)
     {
-        this.message=message;
         this.status=status;
+        this.message=message;
         this.timeStamp=LocalDateTime.now();
     }
 }
