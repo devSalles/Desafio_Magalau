@@ -1,8 +1,8 @@
 package com.example.Desafio_Magalu.service;
 
 import com.example.Desafio_Magalu.core.exception.IdNaoEncontrado;
-import com.example.Desafio_Magalu.dto.MensagemRequest;
-import com.example.Desafio_Magalu.dto.MensagemResponse;
+import com.example.Desafio_Magalu.dto.MensagemRequestDTO;
+import com.example.Desafio_Magalu.dto.MensagemResponseDTO;
 import com.example.Desafio_Magalu.model.Mensagem;
 import com.example.Desafio_Magalu.repository.MensagemRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +14,16 @@ public class MensagemService {
 
     private final MensagemRepository mensagemRepository;
 
-    public Mensagem postMessage(MensagemRequest mensagemRequest)
+    public Mensagem postMessage(MensagemRequestDTO mensagemRequestDTO)
     {
-        Mensagem mensagem = mensagemRequest.toMensagem();
+        Mensagem mensagem = mensagemRequestDTO.toMensagem();
         return this.mensagemRepository.save(mensagem);
     }
 
-    public MensagemResponse showById(Long id)
+    public MensagemResponseDTO showById(Long id)
     {
         Mensagem mensagemID = this.mensagemRepository.findById(id).orElseThrow(IdNaoEncontrado::new);
-        return MensagemResponse.fromMensagem(mensagemID);
+        return MensagemResponseDTO.fromMensagem(mensagemID);
     }
 
     public Boolean deleteById(Long id)

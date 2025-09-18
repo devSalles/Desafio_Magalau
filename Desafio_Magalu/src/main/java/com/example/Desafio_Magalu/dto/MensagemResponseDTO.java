@@ -5,14 +5,14 @@ import com.example.Desafio_Magalu.model.Mensagem;
 
 import java.time.LocalDateTime;
 
-public record MensagemResponse(
+public record MensagemResponseDTO(
         Long id,
         String destinatario,
         LocalDateTime dataHoraEnvio,
         TipoMensagem tipoMensagem
 ) {
-    public static MensagemResponse fromMensagem(Mensagem mensagem)
+    public static MensagemResponseDTO fromMensagem(Mensagem mensagem)
     {
-        return new MensagemResponse(mensagem.getId(), mensagem.getDestinatario(), mensagem.getDataHoraEnvio(),mensagem.getTipoMensagem());
+        return new MensagemResponseDTO(mensagem.getId(), mensagem.getDestinatario(), mensagem.getDataHoraEnvio(),mensagem.getTipoMensagem());
     }
 }

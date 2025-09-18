@@ -2,6 +2,7 @@ package com.example.Desafio_Magalu.dto;
 
 import com.example.Desafio_Magalu.Enum.TipoMensagem;
 import com.example.Desafio_Magalu.model.Mensagem;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -18,15 +19,15 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MensagemRequest {
+public class MensagemRequestDTO {
 
     @NotBlank(message = "Formato de mensagem inválido") @NotNull(message = "Formato de mensagem inválido")
     private String destinatario;
 
-    @Enumerated(EnumType.STRING) @NotBlank(message = "Tipo de mensagem obrigatório") @NotNull(message = "Tipo de mensagem obrigatório")
+    @Enumerated(EnumType.STRING) @NotNull(message = "Tipo de mensagem obrigatório")
     private TipoMensagem tipoMensagem;
 
-    @NotBlank(message = "Data e hora de envio obrigatório") @NotNull(message = "Data e hora de envio obrigatório")
+    @NotNull(message = "Data e hora de envio obrigatório") @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private LocalDateTime dataHoraEnvio;
 
 

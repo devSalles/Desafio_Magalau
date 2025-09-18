@@ -25,9 +25,9 @@ public class Mensagem {
     @Column(nullable = false) @NotBlank(message = "Formato de mensagem inválido") @NotNull(message = "Formato de mensagem inválido")
     private String destinatario;
 
-    @Enumerated(EnumType.STRING) @NotBlank(message = "Tipo de mensagem obrigatório") @NotNull(message = "Tipo de mensagem obrigatório")
+    @Enumerated(EnumType.STRING) @NotNull(message = "Tipo de mensagem obrigatório")
     private TipoMensagem tipoMensagem;
 
-    @Column(nullable = false) @NotBlank(message = "Data e hora de envio obrigatório") @NotNull(message = "Data e hora de envio obrigatório")
+    @Column(nullable = false) @NotNull(message = "Data e hora de envio obrigatório")
     private LocalDateTime dataHoraEnvio;
 }
