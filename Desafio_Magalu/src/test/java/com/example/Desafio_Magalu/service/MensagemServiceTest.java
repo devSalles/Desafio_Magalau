@@ -78,7 +78,7 @@ class MensagemServiceTest {
     }
 
     @Test
-    void postMessage_DeveRetornarUmaExcecao() {
+    void postMessage_DeveRetornarUmaExcecaoQuandoRequisicaoForInvalida() {
         MensagemRequestDTO mensagemRequestDTO = new MensagemRequestDTO();
 
         mensagemRequestDTO.setDestinatario(" ");
@@ -94,7 +94,7 @@ class MensagemServiceTest {
     //--------- TESTE METODO showById ---------
 
     @Test
-    void showById_RetornarQuandoIdExistir() {
+    void showById_DeveRetornarEntidadeQuandoIdExiste() {
         when(mensagemRepository.findById(anyLong())).thenReturn(Optional.of(validMensagem));
 
         MensagemResponseDTO result = this.mensagemService.showById(1L);
@@ -106,7 +106,7 @@ class MensagemServiceTest {
     }
 
     @Test
-    void showById_LancarExcecaoQuandoIdNaoExistir()
+    void showById_LancaExcecaoQuandoIdNaoExistir()
     {
         when(mensagemRepository.findById(anyLong())).thenReturn(Optional.empty());
 
@@ -118,7 +118,7 @@ class MensagemServiceTest {
     //--------- TESTE METODO deleteById ---------
 
     @Test
-    void deleteById() {
+    void deleteById_DeveDeletarEntidadeQuandoIdExistir() {
         when(mensagemRepository.findById(anyLong())).thenReturn(Optional.of(validMensagem));
         doNothing().when(mensagemRepository).delete(validMensagem);
 

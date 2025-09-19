@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionsHandlers {
 
+    //Exceções globais
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MessageRestError> GlobalExceptionHandler()
     {
@@ -17,6 +18,7 @@ public class ExceptionsHandlers {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageRestError);
     }
 
+    //Exceção de requisição inválida
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<MessageRestError> InputErrorExceptionHandler(MethodArgumentNotValidException ex)
     {
@@ -25,6 +27,7 @@ public class ExceptionsHandlers {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageRestError);
     }
 
+    //Exceção quando id não for encontrado
     @ExceptionHandler(IdNaoEncontrado.class)
     public ResponseEntity<MessageRestError> IdNaoEncontradoExceptionHandler(IdNaoEncontrado ex)
     {

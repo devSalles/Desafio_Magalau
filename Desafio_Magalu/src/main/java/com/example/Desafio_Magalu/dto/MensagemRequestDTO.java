@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//DTO usada para fazer requisições
 public class MensagemRequestDTO {
 
     @NotBlank(message = "Formato de mensagem inválido") @NotNull(message = "Formato de mensagem inválido")
@@ -31,6 +32,7 @@ public class MensagemRequestDTO {
     private LocalDateTime dataHoraEnvio;
 
 
+    //Converte DTO em uma entidade
     public Mensagem toMensagem()
     {
         Mensagem mensagem = new Mensagem();

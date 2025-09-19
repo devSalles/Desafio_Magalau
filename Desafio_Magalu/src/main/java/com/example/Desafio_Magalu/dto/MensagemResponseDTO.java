@@ -5,6 +5,7 @@ import com.example.Desafio_Magalu.model.Mensagem;
 
 import java.time.LocalDateTime;
 
+//DTO usada para exibição de informações
 public record MensagemResponseDTO(
         Long id,
         String destinatario,

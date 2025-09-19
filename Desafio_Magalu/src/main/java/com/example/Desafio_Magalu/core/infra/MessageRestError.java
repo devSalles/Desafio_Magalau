@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+//Classe para exibir mensagem tratada
 public class MessageRestError {
 
     private HttpStatus status;
