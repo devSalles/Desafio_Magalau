@@ -36,8 +36,11 @@ class MensagemServiceTest {
 
     private Mensagem validMensagem;
     private MensagemRequestDTO validMensagemDTO;
+
+    //Validator usado para validar entrada de dados
     private static Validator validator;
 
+    //Configuração do validator
     @BeforeAll
     static void setup_Validator()
     {
@@ -45,6 +48,7 @@ class MensagemServiceTest {
         validator=validatorFactory.getValidator();
     }
 
+    //Configuração das entidades
     @BeforeEach
     void setup()
     {
@@ -62,7 +66,6 @@ class MensagemServiceTest {
 
 
     //--------- TESTE METODO postMessage ---------
-
     @Test
     void postMessage_DeveSalvarERetornarSucesso() {
         when(mensagemRepository.save(any(Mensagem.class))).thenReturn(validMensagem);
@@ -74,27 +77,30 @@ class MensagemServiceTest {
         assertEquals(validMensagemDTO.getTipoMensagem(),result.getTipoMensagem());
         assertEquals(validMensagemDTO.getDataHoraEnvio(),result.getDataHoraEnvio());
 
+        //Verificação de chamada de repositório
         verify(mensagemRepository).save(any(Mensagem.class));
     }
 
     @Test
-    void postMessage_DeveRetornarUmaExcecaoQuandoRequisicaoForInvalida() {
+    void postMessage_DeveRetornarUmaExcecaoQuandoRequisicaoForInvalida()
+    {
         MensagemRequestDTO mensagemRequestDTO = new MensagemRequestDTO();
-
         mensagemRequestDTO.setDestinatario(" ");
-        mensagemRequestDTO.setDataHoraEnvio(LocalDateTime.now());
-        mensagemRequestDTO.setTipoMensagem(TipoMensagem.push);
+        mensagemRequestDTO.setDataHoraEnvio(null);
+        mensagemRequestDTO.setTipoMensagem(null);
 
+        //Trabalham juntos para validação do objeto
         Set<ConstraintViolation<MensagemRequestDTO>> violations = validator.validate(mensagemRequestDTO);
-
         assertFalse(violations.isEmpty(),"As violações devem ser válidas");
+
+        //forEach usado para exibir mensagens de erros de validações
         violations.forEach(request-> System.out.println(request.getPropertyPath()+ " - " + request.getMessage()));
     }
 
     //--------- TESTE METODO showById ---------
-
     @Test
-    void showById_DeveRetornarEntidadeQuandoIdExiste() {
+    void showById_DeveRetornarEntidadeQuandoIdExiste()
+    {
         when(mensagemRepository.findById(anyLong())).thenReturn(Optional.of(validMensagem));
 
         MensagemResponseDTO result = this.mensagemService.showById(1L);
@@ -102,6 +108,7 @@ class MensagemServiceTest {
         assertNotNull(result);
         assertEquals(validMensagem.getId(),result.id());
 
+        //Verificação de chamada de repositório
         verify(mensagemRepository,times(1)).findById(1L);
     }
 
@@ -112,19 +119,21 @@ class MensagemServiceTest {
 
         assertThrows(IdNaoEncontrado.class,()->this.mensagemService.showById(99L));
 
+        //Verificação de chamada de repositório
         verify(mensagemRepository,times(1)).findById(99L);
     }
 
     //--------- TESTE METODO deleteById ---------
-
     @Test
     void deleteById_DeveDeletarEntidadeQuandoIdExistir() {
+
         when(mensagemRepository.findById(anyLong())).thenReturn(Optional.of(validMensagem));
         doNothing().when(mensagemRepository).delete(validMensagem);
 
         Boolean result = this.mensagemService.deleteById(1L);
         assertTrue(result);
 
+        //Verificação de chamada de repositório
         verify(mensagemRepository,times(1)).findById(1L);
         verify(mensagemRepository,times(1)).delete(validMensagem);
     }
@@ -136,6 +145,7 @@ class MensagemServiceTest {
 
         assertThrows(IdNaoEncontrado.class,()->this.mensagemService.deleteById(1L));
 
+        //Verificação de chamada de repositório
         verify(mensagemRepository,times(1)).findById(1L);
         verify(mensagemRepository,never()).deleteById(1L);
     }
